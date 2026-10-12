@@ -35,7 +35,7 @@ page=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="
 <meta name="description" content="{e(desc)}"><meta name="robots" content="noindex, nofollow"><link rel="canonical" href="{BASE}">
 <meta property="og:title" content="Tom Halseth Photography"><meta property="og:description" content="{e(desc)}"><meta property="og:image" content="{BASE}img/{hs}-900.webp"><link rel="icon" href="data:,"><meta name="theme-color" content="#14181a">
 <link rel="preload" as="image" href="img/{hs}-hero.webp" fetchpriority="high">
-<link rel="preload" href="fonts/CormorantGaramond.woff2" as="font" type="font/woff2" crossorigin><style>{open('src/fonts.css').read()}{open('src/style.css').read()}</style>
+<link rel="preload" href="fonts/Karla.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="fonts/CormorantGaramond.woff2" as="font" type="font/woff2" crossorigin><style>{open('src/fonts.css').read()}{open('src/style.css').read()}</style>
 <script type="application/ld+json">{json.dumps(ld)}</script></head><body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><a class="brand" href="#top">Tom Halseth</a><nav aria-label="Main"><a href="#gallery">Gallery</a><a href="#about">About</a><a href="#contact">Contact</a></nav></header>

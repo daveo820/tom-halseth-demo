@@ -1,0 +1,4 @@
+node_modules
+lh-*
+*.png
+src/*.jpg

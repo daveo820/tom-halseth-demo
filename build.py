@@ -30,7 +30,7 @@ order=['power-and-energy-temperance-river-tom-halseth','fall-at-split-rock-light
 H=[next(a for a in art if a['slug']==o) for o in order]
 slides=''.join((f'<img class="sl on" src="img/{x["slug"]}-hero.webp" width="{x["w"]}" height="{x["h"]}" alt="" fetchpriority="high" decoding="async">' if i==0 else f'<img class="sl" data-src="img/{x["slug"]}-hero.webp" width="{x["w"]}" height="{x["h"]}" alt="" decoding="async">') for i,x in enumerate(H))
 bars=''.join(f'<i class="{"on" if i==0 else ""}"></i>' for i in range(len(H)))
-page=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+page=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Tom Halseth Photography | Minnesota Landscape Photographer</title>
 <meta name="description" content="{e(desc)}"><meta name="robots" content="noindex, nofollow"><link rel="canonical" href="{BASE}">
 <meta property="og:title" content="Tom Halseth Photography"><meta property="og:description" content="{e(desc)}"><meta property="og:image" content="{BASE}img/{hs}-900.webp"><link rel="icon" href="data:,"><meta name="theme-color" content="#14181a">

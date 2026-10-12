@@ -26,18 +26,29 @@ ld=[{"@context":"https://schema.org","@type":"Person","name":"Tom Halseth","jobT
 {"@context":"https://schema.org","@type":"ImageGallery","name":"Tom Halseth Photography","url":BASE,"author":{"@type":"Person","name":"Tom Halseth"},"image":[{"@type":"ImageObject","name":a['title'],"contentUrl":BASE+"img/"+a['slug']+"-900.webp","url":a['url'],"creator":{"@type":"Person","name":"Tom Halseth"}} for a in art]}]
 filters=''.join(f'<button type="button" class="f" data-f="{k}" aria-pressed="false">{e(v)}</button>' for k,v in cats.items())
 hs=hero['slug']
+order=['power-and-energy-temperance-river-tom-halseth','fall-at-split-rock-lighthouse-lake-superior-tom-halseth','peaceful-coastal-cliff-view-lake-superior-tom-halseth','at-the-falls-tom-halseth']
+H=[next(a for a in art if a['slug']==o) for o in order]
+slides=''.join((f'<img class="sl on" src="img/{x["slug"]}-hero.webp" width="{x["w"]}" height="{x["h"]}" alt="" fetchpriority="high" decoding="async">' if i==0 else f'<img class="sl" data-src="img/{x["slug"]}-hero.webp" width="{x["w"]}" height="{x["h"]}" alt="" decoding="async">') for i,x in enumerate(H))
+bars=''.join(f'<i class="{"on" if i==0 else ""}"></i>' for i in range(len(H)))
 page=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Tom Halseth Photography | Minnesota Landscape Photographer</title>
 <meta name="description" content="{e(desc)}"><meta name="robots" content="noindex, nofollow"><link rel="canonical" href="{BASE}">
 <meta property="og:title" content="Tom Halseth Photography"><meta property="og:description" content="{e(desc)}"><meta property="og:image" content="{BASE}img/{hs}-900.webp"><link rel="icon" href="data:,"><meta name="theme-color" content="#14181a">
 <link rel="preload" as="image" href="img/{hs}-hero.webp" fetchpriority="high">
-<style>{open('src/style.css').read()}</style>
+<link rel="preload" href="fonts/CormorantGaramond.woff2" as="font" type="font/woff2" crossorigin><style>{open('src/fonts.css').read()}{open('src/style.css').read()}</style>
 <script type="application/ld+json">{json.dumps(ld)}</script></head><body>
 <a class="skip" href="#main">Skip to content</a>
 <header class="top"><a class="brand" href="#top">Tom Halseth</a><nav aria-label="Main"><a href="#gallery">Gallery</a><a href="#about">About</a><a href="#contact">Contact</a></nav></header>
 <main id="main">
-<section class="hero" id="top"><img src="img/{hs}-hero.webp" width="{hero['w']}" height="{hero['h']}" alt="{e(hero['title'])}, photograph by Tom Halseth" fetchpriority="high" decoding="async">
-<div class="hero-t"><p class="eyebrow">Minnesota photographer</p><h1>Tom Halseth Photography</h1><p class="lede">Landscape, architectural, abstract and macro images. Every photograph should tell a story.</p><a class="btn" href="#gallery">View the gallery</a></div></section>
+<section class="hero" id="top" aria-labelledby="h-t">
+<div class="slides" aria-hidden="true">{slides}</div>
+<div class="veil"></div>
+<div class="hero-t"><p class="eyebrow"><span class="rule"></span>Minnesota photographer</p>
+<h1 id="h-t"><span class="h-name">Tom Halseth</span><em>Photography</em></h1>
+<p class="lede">Landscape, architectural, abstract and macro images from the North Shore of Lake Superior to the heart of Minneapolis. Every photograph should tell a story.</p>
+<p class="row"><a class="btn" href="#gallery">Explore the gallery</a><a class="btn ghost" href="#about">About Tom</a></p></div>
+<div class="hero-cap" aria-live="polite"><span class="num">01 / 0{len(H)}</span><span class="ct">{e(H[0]['title'])}</span><a class="buy cb" href="{H[0]['url']}" rel="noopener">Buy this print</a><div class="bars">{bars}</div></div>
+</section>
 <section id="gallery" class="wrap" aria-labelledby="g-h"><h2 id="g-h">Gallery</h2><p class="sub">Prints, canvas, metal and more are available through Tom's store. Each Buy button opens that photograph's own page.</p>
 <div class="filters" role="group" aria-label="Filter by collection"><button type="button" class="f" data-f="all" aria-pressed="true">All</button>{filters}</div>
 <ul class="grid">{''.join(fig(a,i) for i,a in enumerate(art))}</ul></section>
@@ -46,11 +57,13 @@ page=f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="
 </main>
 <footer class="wrap foot"><p>All images © Tom Halseth. All rights reserved. Prints fulfilled by Pixels with a 30 day money back guarantee.</p><p class="demo">Demo site by LuminArch</p></footer>
 <dialog id="lb" aria-label="Photo viewer"><button type="button" class="x" aria-label="Close">×</button><button type="button" class="nav prev" aria-label="Previous photo">‹</button><figure><img alt="" width="900" height="675"><figcaption><span></span><a class="buy" href="https://tom-halseth.pixels.com" rel="noopener">Buy a print</a></figcaption></figure><button type="button" class="nav next" aria-label="Next photo">›</button></dialog>
-<script>const ART={json.dumps([[a['slug'],a['title'],a['url']] for a in art])};{open('src/app.js').read()}</script>
+<script>const HERO={json.dumps([[x['title'],x['url']] for x in H])};const ART={json.dumps([[a['slug'],a['title'],a['url']] for a in art])};{open('src/app.js').read()}</script>
 </body></html>'''
 os.makedirs('site',exist_ok=True)
 open('site/index.html','w').write(page)
 shutil.copytree('img','site/img',dirs_exist_ok=True)
+os.makedirs('site/fonts',exist_ok=True)
+for f in ['CormorantGaramond.woff2','CormorantGaramond-Italic.woff2','Karla.woff2']: shutil.copy('fonts/'+f,'site/fonts/'+f)
 open('site/robots.txt','w').write("User-agent: *\nDisallow: /\n")
 open('site/.nojekyll','w').write('')
 print(len(page))
